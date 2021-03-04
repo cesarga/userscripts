@@ -3,19 +3,22 @@ function patchListeners() {
   const orig = EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener = function(...args) {
     if (this instanceof HTMLElement) {
-      const data = {
-        type: args[0],
-        fn: args[1],
-        target: this,
-      };
+      
+      let callback = args[1];
       if (window.DEBUG_LISTENERS) {
-        origfn = data.fn;
-        data.fn = function(...args) {
-          console.log(data);
-          return origfn.apply(this, args)
+        const origcb = args[1];
+        callback = function(...args) {
+          console.log(args);
+          return origcb.apply(this, args)
         }
       }
-      window.listeners.push(data);
+      
+      window.listeners.push({
+        type: args[0],
+        fn: callback,
+        target: this,
+      });
+      
     }
     return orig.apply(this, args);
   };
