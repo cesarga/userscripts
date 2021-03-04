@@ -3,11 +3,9 @@ function patchListeners() {
   const orig = EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener = function(...args) {
     if (this instanceof HTMLElement) {
-      
-      let callback = args[1];
       if (window.DEBUG_LISTENERS) {
         const origcb = args[1];
-        callback = function(...args) {
+        args[1] = function(...args) {
           console.log(args);
           return origcb.apply(this, args)
         }
@@ -15,7 +13,7 @@ function patchListeners() {
       
       window.listeners.push({
         type: args[0],
-        fn: callback,
+        fn: args[1],
         target: this,
       });
       
