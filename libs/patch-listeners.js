@@ -1,15 +1,15 @@
 function patchListeners() {
   window.listeners = [];
-  const orig = EventTarget.prototype.addEventListener;
+  const _addEventListener = EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener = function(...args) {
     if (this instanceof HTMLElement) {
-      if (window.DEBUG_LISTENERS) {
-        const origcb = args[1];
+        const _callback = args[1];
         args[1] = function(...args) {
-          console.log(args);
-          return origcb.apply(this, args)
+          if (window.DEBUG_LISTENERS) {
+            console.log(args);
+          }
+          return _callback.apply(this, args);
         }
-      }
       
       window.listeners.push({
         type: args[0],
@@ -18,6 +18,6 @@ function patchListeners() {
       });
       
     }
-    return orig.apply(this, args);
+    return _addEventListener.apply(this, args);
   };
 }
