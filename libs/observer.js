@@ -9,7 +9,7 @@ function observe(selector, callback) {
   const _callback = function(mutationsList, observer) {
     // Use traditional 'for loops' for IE 11
     for(const mutation of mutationsList) {
-      callback(mutationList, observer);
+      callback(mutation, mutationsList, observer);
     }
   };
 
