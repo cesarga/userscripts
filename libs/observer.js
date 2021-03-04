@@ -1,6 +1,10 @@
 function observe(selector, callback) {
   // Select the node that will be observed for mutations
   const targetNode = document.querySelector(selector);
+  
+  if (null === targetNode) {
+    return;
+  }
 
   // Options for the observer (which mutations to observe)
   const config = { attributes: true, childList: true, subtree: true };
