@@ -1,4 +1,4 @@
-function observe(selector, callback, attributes: false) {
+function observe(selector, callback, attributes = false) {
   // Select the node that will be observed for mutations
   const targetNode = document.querySelector(selector);
   
