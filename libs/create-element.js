@@ -66,4 +66,6 @@ function createElement(options) {
     default:
       elementParent.append(element);
   }
+  
+  return element;
 }
