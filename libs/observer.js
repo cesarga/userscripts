@@ -27,4 +27,6 @@ function observe(selector, callback, attributes = false, once = false) {
 
   // Start observing the target node for configured mutations
   observer.observe(targetNode, config);
+  
+  return observer;
 }
