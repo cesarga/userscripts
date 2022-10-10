@@ -12,13 +12,13 @@ function observe(selector, callback, attributes = false, once = false) {
   // Callback function to execute when mutations are observed
   var observer = null;
   const _callback = function(mutationsList, observer) {
+    // Disconect the observer
+    if (once) {
+      observer.disconnect();
+    }
     // Use traditional 'for loops' for IE 11
     for(const mutation of mutationsList) {
       callback(mutation, mutationsList, observer);
-    }
-    
-    if (once) {
-      observer.disconnect();
     }
   };
 
